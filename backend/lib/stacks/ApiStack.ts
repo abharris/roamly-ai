@@ -58,7 +58,12 @@ export class ApiStack extends cdk.Stack {
     const itineraryFn     = makeFn('Itinerary',       'itinerary/handler.ts');
     const friendsFn       = makeFn('Friends',         'friends/handler.ts');
     const usersFn         = makeFn('Users',           'users/handler.ts');
-    const aiParseFn       = makeFn('AIParse',         'ai-parse/handler.ts');
+    const aiParseFn       = new lambdaNode.NodejsFunction(this, 'AIParse', {
+      ...lambdaDefaults,
+      entry: path.join(__dirname, '..', 'lambdas', 'ai-parse/handler.ts'),
+      functionName: 'roamly-aiparse',
+      timeout: cdk.Duration.seconds(60),
+    });
     const recommendFn     = makeFn('Recommendations', 'recommendations/handler.ts');
     const migrateFn       = makeFn('Migrate',         'migrate/handler.ts');
 

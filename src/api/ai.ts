@@ -3,7 +3,7 @@ import { ParseResult, ParsedPlace, ParsedItineraryItem } from '../types/models';
 
 export const aiApi = {
   parse: (tripId: string, data: { raw_text: string; trip_start_date?: string }) =>
-    apiClient.post<ParseResult>(`/trips/${tripId}/parse`, data).then((r) => r.data),
+    apiClient.post<ParseResult>(`/trips/${tripId}/parse`, data, { timeout: 70000 }).then((r) => r.data),
 
   confirm: (
     tripId: string,

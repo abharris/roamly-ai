@@ -55,14 +55,14 @@ export async function handler(
 
     // PUT /v1/trips/:tripId/itinerary/:itemId
     if (method === 'PUT' && params.itemId) {
-      const { title, item_type, description, start_time, end_time, day_index, sort_order } = body;
+      const { title, item_type, description, start_time, end_time, day_index, place_id } = body;
       const item = await queryOne(
         `UPDATE itinerary_items SET
            title=COALESCE($1,title), item_type=COALESCE($2,item_type),
-           description=$3, start_time=$4, end_time=$5, day_index=$6,
+           description=$3, start_time=$4, end_time=$5, day_index=$6, place_id=$9,
            updated_at=NOW()
          WHERE id=$7 AND trip_id=$8 RETURNING *`,
-        [title, item_type, description ?? null, start_time ?? null, end_time ?? null, day_index ?? null, params.itemId, tripId]
+        [title, item_type, description ?? null, start_time ?? null, end_time ?? null, day_index ?? null, params.itemId, tripId, place_id ?? null]
       );
       if (!item) return error(404, 'Item not found');
       return ok(item);

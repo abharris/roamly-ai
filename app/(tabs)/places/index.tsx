@@ -9,14 +9,11 @@ import {
   Easing,
   TouchableOpacity,
 } from 'react-native';
-import { router } from 'expo-router';
-import { ROUTES } from '../../../src/constants/routes';
 import { useAllPlaces } from '../../../src/hooks/usePlaces';
 import { Place } from '../../../src/types/models';
 import { PlaceCard } from '../../../src/components/places/PlaceCard';
 import { PlaceMap } from '../../../src/components/places/PlaceMap';
 import { FilterSheet } from '../../../src/components/ui/FilterSheet';
-import { useMapStore } from '../../../src/store/mapStore';
 import { Colors, Fonts } from '../../../src/theme';
 import { EmptyState } from '../../../src/components/ui/EmptyState';
 import { PlaceCardSkeleton } from '../../../src/components/ui/SkeletonLoader';
@@ -60,7 +57,7 @@ export default function PlacesGlobalScreen() {
   }>({ highlights: [], types: [], trips: [], locations: [] });
   const [showFilterSheet, setShowFilterSheet] = useState(false);
 
-  const { selectedPlaceId, setSelectedPlaceId } = useMapStore();
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
 
   const mapAnim = useRef(new Animated.Value(1)).current;
   const mapHeight = mapAnim.interpolate({ inputRange: [0, 1], outputRange: [0, 280] });
@@ -120,10 +117,7 @@ export default function PlacesGlobalScreen() {
       place={item}
       selected={item.id === selectedPlaceId}
       subtitle={item.trip_name}
-      onPress={() => {
-        setSelectedPlaceId(item.id === selectedPlaceId ? null : item.id);
-        router.push(ROUTES.tripPlaces(item.trip_id));
-      }}
+      onPress={() => setSelectedPlaceId(item.id === selectedPlaceId ? null : item.id)}
     />
   ), [selectedPlaceId]);
 

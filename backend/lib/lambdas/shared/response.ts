@@ -17,7 +17,7 @@ export function error(statusCode: number, message: string) {
 export function handleError(e: unknown) {
   console.error(e);
   const err = e as any;
-  const statusCode = err?.statusCode ?? 500;
+  const statusCode = err?.statusCode ?? err?.status ?? 500;
   const message = err?.message ?? 'Internal server error';
   return error(statusCode, message);
 }

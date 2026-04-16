@@ -25,7 +25,7 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (__DEV__) console.log(`[API] ERROR ${error.response?.status} ${error.config?.url}`);
+    if (__DEV__) console.log(`[API] ERROR ${error.response?.status} ${error.config?.url}`, error.response?.data);
     if (error.response?.status === 429) {
       const retryAfter = error.response.headers['retry-after'];
       return Promise.reject(

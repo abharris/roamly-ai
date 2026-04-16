@@ -26,7 +26,6 @@ import { FilterSheet } from '../../../../src/components/ui/FilterSheet';
 import { AddActionSheet } from '../../../../src/components/ui/AddActionSheet';
 import { useTripDetail } from '../../../../src/hooks/useTrips';
 import { AddAIModal } from '../../../../src/components/ai/AddAIModal';
-import { useMapStore } from '../../../../src/store/mapStore';
 import { Button } from '../../../../src/components/ui/Button';
 import { Input } from '../../../../src/components/ui/Input';
 import { placesApi } from '../../../../src/api/places';
@@ -237,7 +236,7 @@ export default function PlacesScreen() {
 
   const mapAnim = useRef(new Animated.Value(1)).current;
 
-  const { selectedPlaceId, setSelectedPlaceId } = useMapStore();
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
   const { data: trip } = useTripDetail(tripId);
   const { data: allPlaces = [], isLoading } = usePlaces(tripId);
   const toggleHighlight = useToggleHighlight(tripId);
