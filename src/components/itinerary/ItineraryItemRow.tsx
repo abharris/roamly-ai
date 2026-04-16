@@ -7,16 +7,6 @@ import { formatInTimeZone } from 'date-fns-tz';
 import { Badge } from '../ui/Badge';
 import { Colors, Fonts } from '../../theme';
 
-const TYPE_ICONS: Record<string, string> = {
-  flight: '✈️',
-  hotel: '🏨',
-  activity: '🎯',
-  restaurant: '🍽️',
-  bar: '🍸',
-  shop: '🛍️',
-  transport: '🚌',
-  other: '📌',
-};
 
 const TYPE_COLORS: Record<string, 'blue' | 'teal' | 'amber' | 'red' | 'gray' | 'sky' | 'pink' | 'purple' | 'orange' | 'green'> = {
   flight: 'sky',
@@ -54,7 +44,6 @@ function openInMaps(item: ItineraryItem) {
 
 export function ItineraryItemRow({ item, onPress, onDelete, onEdit, timezone }: ItineraryItemRowProps) {
   const swipeRef = useRef<SwipeableMethods>(null);
-  const icon = TYPE_ICONS[item.item_type] ?? '📌';
   const formatTime = (iso?: string | null) => {
     if (!iso) return null;
     return timezone ? formatInTimeZone(new Date(iso), timezone, 'h:mm a') : format(new Date(iso), 'h:mm a');
@@ -105,7 +94,6 @@ export function ItineraryItemRow({ item, onPress, onDelete, onEdit, timezone }: 
         <View style={styles.line} />
         <View style={styles.content}>
           <View style={styles.headerRow}>
-            <Text style={styles.icon}>{icon}</Text>
             <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
           </View>
           {hasPlace && (
