@@ -66,7 +66,7 @@ export async function handler(
     }
 
     // GET /v1/places — all places across the user's trips
-    if (method === 'GET' && path.endsWith('/places')) {
+    if (method === 'GET' && path.endsWith('/places') && !params.tripId) {
       const places = await query(
         `SELECT p.*, t.name AS trip_name, t.location AS trip_location
          FROM places p

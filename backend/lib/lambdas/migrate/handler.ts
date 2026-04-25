@@ -149,6 +149,10 @@ const MIGRATIONS = [
       );
     `,
   },
+  {
+    name: '007_add_timezone_to_trips',
+    sql: `ALTER TABLE trips ADD COLUMN IF NOT EXISTS timezone VARCHAR(64);`,
+  },
 ];
 
 export async function handler(event: { query?: string } = {}) {
